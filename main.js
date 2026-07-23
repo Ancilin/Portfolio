@@ -123,6 +123,24 @@ function initProjectFilters() {
 
 /* 5. Modal for Project & Certificate Previews */
 const projectData = {
+  hrms: {
+    title: 'Human Resource Management System (HRMS)',
+    category: 'Full-Stack React & SQLite Application',
+    tech: 'React, Vite, Node.js, Express, SQLite, JWT, Bcrypt, Custom CSS Variables',
+    liveUrl: 'https://human-resource-management-system-three.vercel.app/',
+    details: `
+      <p style="margin-bottom: 1rem;">A full-stack Human Resource Management System built to streamline organizational processes, attendance tracking, and employee request workflows.</p>
+      <h4 style="margin-bottom: 0.5rem; color: var(--accent-cyan);">Key Deliverables & Features:</h4>
+      <ul style="padding-left: 1.2rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem;">
+        <li><strong>3D Split-Screen Portal:</strong> Landing view with interactive 3D assets and quick demo presets (HR Admin & Employee roles).</li>
+        <li><strong>HR Executive Dashboard:</strong> Real-time workforce metrics (attendance rate, payroll sum) and pending leave requests queue.</li>
+        <li><strong>Employee Personal Portal:</strong> Single-click punch-in/out check-in panel and leave quota monitoring.</li>
+        <li><strong>Leave Approval System:</strong> Automated workflows for submitting, approving, and rejecting leave requests with real-time updates.</li>
+        <li><strong>Role-Based Access Control (RBAC):</strong> Secure backend verification using JSON Web Tokens (JWT) and Bcrypt encryption.</li>
+        <li><strong>Glassmorphic UI Design:</strong> Beautiful user experience with smooth dark/light mode toggle animations.</li>
+      </ul>
+    `
+  },
   exam: {
     title: 'Exam Hall Management & Seat Allocation',
     category: 'Full-Stack Django Application',
