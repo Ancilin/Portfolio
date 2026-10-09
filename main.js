@@ -184,7 +184,23 @@ const projectData = {
         <li>Online appointment scheduling and patient medical record management.</li>
       </ul>
     `
-  }
+  },
+    fraud: {
+      title: 'Credit Card Fraud Detection',
+      category: 'Machine Learning & React',
+      tech: 'Python, Scikit-learn, React, Vite, Node.js',
+      liveUrl: 'https://credit-card-fraud-detection-green-six.vercel.app/',
+      details: `
+        <p style="margin-bottom: 1rem;">Detect fraudulent credit card transactions using a machine learning model with high accuracy.</p>
+        <h4 style="margin-bottom: 0.5rem; color: var(--accent-cyan);">Key Features:</h4>
+        <ul style="padding-left: 1.2rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem;">
+          <li>Data ingestion and preprocessing</li>
+          <li>Model training with RandomForest and XGBoost</li>
+          <li>Interactive prediction demo</li>
+          <li>Responsive UI built with React</li>
+        </ul>
+      `
+    }
 };
 
 function initModalHandler() {
