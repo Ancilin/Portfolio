@@ -298,7 +298,9 @@ function initContactForm() {
   const contactForm = document.getElementById('contactForm');
   if (!contactForm) return;
 
-  contactForm.addEventListener('submit', () => {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent opening blocked formsubmit.co tab
+
     const name = document.getElementById('name').value.trim() || 'Visitor';
     const email = document.getElementById('email').value.trim();
     const subject = document.getElementById('subject').value.trim();
@@ -306,8 +308,30 @@ function initContactForm() {
 
     const bodyContent = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=aancilin54@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+    const mailtoUrl = `mailto:aancilin54@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
 
-    // Show in-page success modal with instant Gmail compose option
+    // Open Gmail compose in a new tab for instant, reliable delivery
+    window.open(gmailUrl, '_blank');
+
+    // Also attempt background AJAX submission (silently ignores adblocker/Malwarebytes blocks)
+    try {
+      fetch('https://formsubmit.co/ajax/aancilin54@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          _subject: subject,
+          message: message,
+          _captcha: 'false'
+        })
+      }).catch(() => {});
+    } catch (err) {}
+
+    // Show in-page success modal with instant Gmail & Email App options
     const modal = document.getElementById('appModal');
     const modalContent = document.getElementById('modalContent');
 
@@ -317,9 +341,9 @@ function initContactForm() {
           <div style="width: 75px; height: 75px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 2px solid var(--accent-emerald); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem auto; font-size: 2.2rem; color: var(--accent-emerald);">
             <i class="fa-solid fa-circle-check"></i>
           </div>
-          <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--text-main);">Message Submitted!</h2>
+          <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--text-main);">Ready to Send!</h2>
           <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.2rem; line-height: 1.6;">
-            Thank you, <strong>${name}</strong>! Your message is processing for delivery to <strong>Ancilin P G</strong> (<a href="mailto:aancilin54@gmail.com" style="color: var(--accent-cyan); text-decoration: none;">aancilin54@gmail.com</a>).
+            Thank you, <strong>${name}</strong>! We've opened your email compose window addressed to <strong>Ancilin P G</strong> (<a href="mailto:aancilin54@gmail.com" style="color: var(--accent-cyan); text-decoration: none;">aancilin54@gmail.com</a>). Just click <strong>Send</strong> in Gmail!
           </p>
           <div style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-color); padding: 1rem; border-radius: 10px; font-size: 0.88rem; color: var(--text-dim); margin-bottom: 1.2rem; text-align: left;">
             <div><strong>Subject:</strong> ${subject}</div>
@@ -328,7 +352,10 @@ function initContactForm() {
 
           <div style="display: flex; flex-direction: column; gap: 0.65rem;">
             <a href="${gmailUrl}" target="_blank" class="btn btn-secondary" style="width: 100%; border-color: rgba(6, 182, 212, 0.4); color: var(--accent-cyan);">
-              <i class="fa-brands fa-google"></i> Also Send via Gmail App (Instant Delivery)
+              <i class="fa-brands fa-google"></i> Open Gmail Compose
+            </a>
+            <a href="${mailtoUrl}" class="btn btn-secondary" style="width: 100%;">
+              <i class="fa-solid fa-envelope"></i> Open Default Email App
             </a>
             <button class="btn btn-primary" onclick="closeModal()" style="width: 100%;">Back to Portfolio</button>
           </div>
@@ -337,7 +364,7 @@ function initContactForm() {
       modal.classList.add('active');
     }
 
-    showToast('Success! Message submitted for Ancilin P G.');
+    showToast('Email compose opened for Ancilin P G!');
     setTimeout(() => {
       contactForm.reset();
     }, 500);
